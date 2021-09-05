@@ -52,5 +52,5 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ env.REGISTRY_USERNAME }}/test:latest,${{ env.REGISTRY_USERNAME }}/test${{ env.VERSION }}
+          tags: ${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/test:latest,${{ env.REGISTRY }}/${{ env.REGISTRY_USERNAME }}/test:${{ env.VERSION }}
           labels: ${{ steps.meta.outputs.labels }}
