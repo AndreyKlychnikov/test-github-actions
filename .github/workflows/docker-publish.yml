@@ -17,6 +17,10 @@ jobs:
       packages: write
 
     steps:
+      - id: read-docker-image-identifiers
+        name: Read Docker Image Identifiers
+        run: echo ::set-env name=REGISTRY_USERNAME::$(echo ${{ github.actor }} | tr '[:upper:]' '[:lower:]')
+
       - name: Checkout repository
         uses: actions/checkout@v2
 
@@ -48,5 +52,5 @@ jobs:
         with:
           context: .
           push: ${{ github.event_name != 'pull_request' }}
-          tags: ${{ github.actor }}/test:latest,${{ github.actor }}/test${{ env.VERSION }}
+          tags: ${{ env.REGISTRY_USERNAME }}/test:latest,${{ env.REGISTRY_USERNAME }}/test${{ env.VERSION }}
           labels: ${{ steps.meta.outputs.labels }}
