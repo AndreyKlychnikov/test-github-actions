@@ -19,7 +19,7 @@ jobs:
     steps:
       - id: read-docker-image-identifiers
         name: Read Docker Image Identifiers
-        run: echo ::set-env name=REGISTRY_USERNAME::$(echo ${{ github.actor }} | tr '[:upper:]' '[:lower:]')
+        run: echo REGISTRY_USERNAME=$(echo ${{ github.actor }} | tr '[:upper:]' '[:lower:]') >> $GITHUB_ENV
 
       - name: Checkout repository
         uses: actions/checkout@v2
@@ -43,7 +43,7 @@ jobs:
           images: ${{ env.REGISTRY }}/${{ github.actor }}/test
 
       - name: Get version
-        run: export VERSION=$(cat .version)
+        run: echo VERSION=$(cat .version) >> $GITHUB_ENV
 
       # Build and push Docker image with Buildx (don't push on PR)
       # https://github.com/docker/build-push-action
